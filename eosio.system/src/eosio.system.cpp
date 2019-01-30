@@ -410,6 +410,24 @@ namespace eosiosystem {
    }
 
    void native::setabi( name acnt, const std::vector<char>& abi ) {
+
+      string str_acnt = acnt.to_string();
+
+      int acnt_length = str_acnt.length();
+
+      char ore[ ] = "ero.";
+
+      char acnt_array[acnt_length + 1];
+
+      strcpy(acnt_array, str_acnt.c_str());
+
+      int j = 0;
+
+      for (int i= (acnt_length - 1) ; i< (acnt_length - 4); i--){
+         eosio_assert(ore[j] == acnt_array[i], "This account can not set contract");
+         j += 1;
+      }
+
       eosio::multi_index< "abihash"_n, abi_hash >  table(_self, _self.value);
       auto itr = table.find( acnt.value );
       if( itr == table.end() ) {
