@@ -1,42 +1,55 @@
 #include <system.ore/system.ore.hpp>
+#include <eosio.token/eosio.token.hpp>
 
 namespace eosiosystem
 {
+
+void system_ore::setprice(name funder, asset newaccprice)
+{
+    require_auth(_self);
+    oreprice pricetable(_self, _self);
+    auto itr = pricetable.find(price.symbol.raw());
+    if(itr == pricetable.end()){
+        pricetable.emplace(_self, [&](auto &o) {
+            o.funder = funder;
+            o.newaccprice = newaccprice;
+        });
+    } else {
+        pricetable.modify(itr, _self, [&](auto &f){
+            f.funder = funder;
+            f.newaccprice = newaccprice;
+        });
+    }
+}
 
 void system_ore::createoreacc(name creator,
                               name newact,
                               ignore<authority> owner,
                               ignore<authority> active,
                               asset ramquant,
-                              uint64_t rambytes = 0,
                               asset stake_net_quantity,
                               asset stake_cpu_quantity)
-
 {
 
-    auto itr = _rammarket.find(ramcore_symbol.raw());
-    auto tmp = *itr;
-    auto eosout = tmp.convert( asset(bytes, ram_symbol), core_symbol() );
+    oreprice pricetable(_self, _self);
+    auto itr = pricetable.find(price.symbol.raw());
 
+    INLINE_ACTION_SENDER(eosio::token, transfer)
+    (
+        "eosio.token"_n, {{creator, active_permission}},
+        {creator, itr->funder, itr->newaccprice, std::string("pay ore acc")});
 
     INLINE_ACTION_SENDER(eosiosystem::native, newaccount)
     (
         "eosio"_n, {{_self, active_permission}},
         {_self, newact, owner, active});
 
-    if (rambytes == 0)
-    {
-        eosio_assert(ramquant.amount > 0, "Have to buy ram");
-        INLINE_ACTION_SENDER(eosiosystem::system_contract, buyram)
+  
+    INLINE_ACTION_SENDER(eosiosystem::system_contract, buyram)
         (
             "eosio"_n, {{_self, active_permission}},
             {_self, newact, ramquant});
-    } else {
-        INLINE_ACTION_SENDER(eosiosystem::system_contract, buyrambytes)
-        (
-            "eosio"_n, {{_self, active_permission}},
-            {_self, newact, rambytes});
-    }
+
 
     INLINE_ACTION_SENDER(eosiosystem::system_contract, delegatebw)
     (
@@ -96,15 +109,17 @@ void system_ore::sellram(name account, int64_t bytes)
         {name account, int64_t bytes});
 }
 
-void system_ore::claimrewards(const name owner)
-{
-    require_auth(owner);
+// void system_ore::claimrewards(const name owner)
+// {
+//     require_auth(owner);
 
-    INLINE_ACTION_SENDER(eosiosystem::system_contract, claimrewards)
-    (
-        "eosio"_n, {{_self, active_permission}},
-        {owner});
-}
+//     INLINE_ACTION_SENDER(eosiosystem::system_contract, claimrewards)
+//     (
+//         "eosio"_n, {{_self, active_permission}},
+//         {owner});
+
+    
+// }
 
 } // namespace eosiosystem
 
