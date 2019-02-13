@@ -1,8 +1,12 @@
 #include <eosio.system/eosio.system.hpp>
 
 #include <eosio.token/eosio.token.hpp>
+#include <../../ore.standard_token/include/ore.standard_token.hpp>
 
 namespace eosiosystem {
+
+   using eosio::asset;
+   using std::pair;
 
    const int64_t  min_pervote_daily_pay = 100'0000;
    const int64_t  min_activated_stake   = 150'000'000'0000;
@@ -117,24 +121,24 @@ namespace eosiosystem {
             { _self, vpay_account, asset(to_per_vote_pay, core_symbol()), "fund per-vote bucket" }
          );
 
-         INLINE_ACTION_SENDER(eosio::token, issue)(
-            token_account, { {_self, active_permission} },
-            { _self, asset(new_tokens, ore_symbol), std::string("issue tokens for producer pay and savings") }
+         INLINE_ACTION_SENDER(eosio::oretoken, issue)(
+            oretoken_account, { {_self, active_permission} },
+            { _self, asset(new_tokens, ore_symbol), std::string("ore issue tokens for producer pay and savings") }
          );
 
-         INLINE_ACTION_SENDER(eosio::token, transfer)(
-            token_account, { {_self, active_permission} },
-            { _self, saving_account, asset(to_savings, ore_symbol), "unallocated inflation" }
+         INLINE_ACTION_SENDER(eosio::oretoken, transfer)(
+            oretoken_account, { {_self, active_permission} },
+            { _self, saving_account, asset(to_savings, ore_symbol), "ore unallocated inflation" }
          );
 
-         INLINE_ACTION_SENDER(eosio::token, transfer)(
-            token_account, { {_self, active_permission} },
-            { _self, bpay_account, asset(to_per_block_pay, ore_symbol), "fund per-block bucket" }
+         INLINE_ACTION_SENDER(eosio::oretoken, transfer)(
+            oretoken_account, { {_self, active_permission} },
+            { _self, bpay_account, asset(to_per_block_pay, ore_symbol), "ore fund per-block bucket" }
          );
 
-         INLINE_ACTION_SENDER(eosio::token, transfer)(
-            token_account, { {_self, active_permission} },
-            { _self, vpay_account, asset(to_per_vote_pay, ore_symbol), "fund per-vote bucket" }
+         INLINE_ACTION_SENDER(eosio::oretoken, transfer)(
+            oretoken_account, { {_self, active_permission} },
+            { _self, vpay_account, asset(to_per_vote_pay, ore_symbol), "ore fund per-vote bucket" }
          );
 
          _gstate.pervote_bucket          += to_per_vote_pay;
@@ -209,19 +213,20 @@ namespace eosiosystem {
             token_account, { {bpay_account, active_permission}, {owner, active_permission} },
             { bpay_account, funding_account, asset(producer_per_block_pay, core_symbol()), std::string("producer block pay") }
          );
-         INLINE_ACTION_SENDER(eosio::token, transfer)(
-            token_account, { {bpay_account, active_permission}, {owner, active_permission} },
-            { bpay_account, owner, asset(producer_per_block_pay, ore_symbol), std::string("producer block pay") }
+         INLINE_ACTION_SENDER(eosio::oretoken, transfer)(
+            oretoken_account, { {bpay_account, active_permission}, {owner, active_permission} },
+            { bpay_account, owner, asset(producer_per_block_pay, ore_symbol), std::string("ore producer block pay") }
          );
+
       }
       if( producer_per_vote_pay > 0 ) {
          INLINE_ACTION_SENDER(eosio::token, transfer)(
             token_account, { {vpay_account, active_permission}, {owner, active_permission} },
             { vpay_account, funding_account, asset(producer_per_vote_pay, core_symbol()), std::string("producer vote pay") }
          );
-         INLINE_ACTION_SENDER(eosio::token, transfer)(
-            token_account, { {vpay_account, active_permission}, {owner, active_permission} },
-            { vpay_account, owner, asset(producer_per_vote_pay, ore_symbol), std::string("producer vote pay") }
+         INLINE_ACTION_SENDER(eosio::oretoken, transfer)(
+            oretoken_account, { {vpay_account, active_permission}, {owner, active_permission} },
+            { vpay_account, owner, asset(producer_per_vote_pay, ore_symbol), std::string("ore producer vote pay") }
          );
       }
    }
