@@ -19,7 +19,7 @@ namespace eosio
 {
 
 ACTION oretoken::create(name issuer,
-                   asset maximum_supply)
+                        asset maximum_supply)
 {
     require_auth(_self);
 
@@ -63,7 +63,12 @@ ACTION oretoken::issue(name to, asset quantity, string memo)
     eosio_assert(existing != statstable.end(), "token with symbol does not exist, create token before issue");
     const auto &st = *existing;
 
-    require_auth("eosio"_n);
+    if(quantity.symbol.code().to_string()  == "ORE"){
+       require_auth(name("eosio"));
+    }
+    else {
+        require_auth(st.issuer);
+    }
     eosio_assert(quantity.is_valid(), "invalid quantity");
     eosio_assert(quantity.amount > 0, "must issue positive quantity");
 
@@ -80,7 +85,11 @@ ACTION oretoken::issue(name to, asset quantity, string memo)
     {
         SEND_INLINE_ACTION(*this, transfer, {st.issuer, "active"_n}, {st.issuer, to, quantity, memo});
     }
-}
+    else if (to == name("funds.ore") && quantity.symbol.code().to_string() == "ORE")
+    {
+        SEND_INLINE_ACTION(*this, transfer, {st.issuer, "active"_n}, {st.issuer, to, quantity, memo});
+    }
+} // namespace eosio
 
 ACTION oretoken::retire(asset quantity, string memo)
 {
@@ -107,9 +116,9 @@ ACTION oretoken::retire(asset quantity, string memo)
 }
 
 ACTION oretoken::transfer(name from,
-                     name to,
-                     asset quantity,
-                     string memo)
+                          name to,
+                          asset quantity,
+                          string memo)
 {
     eosio_assert(from != to, "cannot transfer to self");
     require_auth(from);
@@ -230,4 +239,4 @@ ACTION oretoken::close(name owner, const symbol &symbol)
 
 } // namespace eosio
 
-EOSIO_DISPATCH( eosio::oretoken, (create)(issue)(transfer)(approve)(transferfrom)(open)(close)(retire))
+EOSIO_DISPATCH(eosio::oretoken, (create)(issue)(transfer)(approve)(transferfrom)(open)(close)(retire))
