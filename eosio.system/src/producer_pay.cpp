@@ -4,7 +4,8 @@
 #include <../../ore.standard_token/include/ore.standard_token.hpp>
 
 namespace eosiosystem {
-
+   using eosio::symbol;
+   using eosio::symbol_code;
    using eosio::asset;
    using std::pair;
 
@@ -89,14 +90,13 @@ namespace eosiosystem {
 
       const auto ct = current_time_point();
 
-      eosio_assert( ct - prod.last_claim_time > microseconds(useconds_per_day), "already claimed rewards within past day" );
+      eosio_assert( ct - prod.last_claim_time > microseconds(0), "already claimed rewards within past day" );
 
       const asset token_supply   = eosio::token::get_supply(token_account, core_symbol().code() );
       const auto usecs_since_last_fill = (ct - _gstate.last_pervote_bucket_fill).count();
 
       if( usecs_since_last_fill > 0 && _gstate.last_pervote_bucket_fill > time_point() ) {
          auto new_tokens = static_cast<int64_t>( (continuous_rate * double(token_supply.amount) * double(usecs_since_last_fill)) / double(useconds_per_year) );
-
          auto to_producers     = new_tokens / 5;
          auto to_savings       = new_tokens - to_producers;
          auto to_per_block_pay = to_producers / 4;
@@ -121,24 +121,24 @@ namespace eosiosystem {
             { _self, vpay_account, asset(to_per_vote_pay, core_symbol()), "fund per-vote bucket" }
          );
 
-         INLINE_ACTION_SENDER(eosio::oretoken, issue)(
-            oretoken_account, { {_self, active_permission} },
-            { _self, asset(new_tokens, ore_symbol), std::string("ore issue tokens for producer pay and savings") }
+         INLINE_ACTION_SENDER(eosio::token, issue)(
+            token_account, { {_self, active_permission} },
+            { _self, asset(new_tokens, symbol(symbol_code("ORE"), 4)), std::string("ore issue tokens for producer pay and savings") }
          );
 
-         INLINE_ACTION_SENDER(eosio::oretoken, transfer)(
-            oretoken_account, { {_self, active_permission} },
-            { _self, saving_account, asset(to_savings, ore_symbol), "ore unallocated inflation" }
+         INLINE_ACTION_SENDER(eosio::token, transfer)(
+            token_account, { {_self, active_permission} },
+            { _self, saving_account, asset(to_savings, symbol(symbol_code("ORE"), 4)), "ore unallocated inflation" }
          );
 
-         INLINE_ACTION_SENDER(eosio::oretoken, transfer)(
-            oretoken_account, { {_self, active_permission} },
-            { _self, bpay_account, asset(to_per_block_pay, ore_symbol), "ore fund per-block bucket" }
+         INLINE_ACTION_SENDER(eosio::token, transfer)(
+            token_account, { {_self, active_permission} },
+            { _self, bpay_account, asset(to_per_block_pay, symbol(symbol_code("ORE"), 4)), "ore fund per-block bucket" }
          );
 
-         INLINE_ACTION_SENDER(eosio::oretoken, transfer)(
-            oretoken_account, { {_self, active_permission} },
-            { _self, vpay_account, asset(to_per_vote_pay, ore_symbol), "ore fund per-vote bucket" }
+         INLINE_ACTION_SENDER(eosio::token, transfer)(
+            token_account, { {_self, active_permission} },
+            { _self, vpay_account, asset(to_per_vote_pay, symbol(symbol_code("ORE"), 4)), "ore fund per-vote bucket" }
          );
 
          _gstate.pervote_bucket          += to_per_vote_pay;
@@ -213,20 +213,19 @@ namespace eosiosystem {
             token_account, { {bpay_account, active_permission}, {owner, active_permission} },
             { bpay_account, funding_account, asset(producer_per_block_pay, core_symbol()), std::string("producer block pay") }
          );
-         INLINE_ACTION_SENDER(eosio::oretoken, transfer)(
-            oretoken_account, { {bpay_account, active_permission}, {owner, active_permission} },
-            { bpay_account, owner, asset(producer_per_block_pay, ore_symbol), std::string("ore producer block pay") }
+         INLINE_ACTION_SENDER(eosio::token, transfer)(
+            token_account, { {bpay_account, active_permission}, {owner, active_permission} },
+            { bpay_account, owner, asset(producer_per_block_pay, symbol(symbol_code("ORE"), 4)), std::string("ore producer block pay") }
          );
-
       }
       if( producer_per_vote_pay > 0 ) {
          INLINE_ACTION_SENDER(eosio::token, transfer)(
             token_account, { {vpay_account, active_permission}, {owner, active_permission} },
-            { vpay_account, funding_account, asset(producer_per_vote_pay, core_symbol()), std::string("producer vote pay") }
+            { vpay_account, owner, asset(producer_per_vote_pay, symbol(symbol_code("ORE"), 4)), std::string("producer vote pay") }
          );
-         INLINE_ACTION_SENDER(eosio::oretoken, transfer)(
-            oretoken_account, { {vpay_account, active_permission}, {owner, active_permission} },
-            { vpay_account, owner, asset(producer_per_vote_pay, ore_symbol), std::string("ore producer vote pay") }
+         INLINE_ACTION_SENDER(eosio::token, transfer)(
+            token_account, { {vpay_account, active_permission}, {owner, active_permission} },
+            { vpay_account, funding_account, asset(producer_per_vote_pay, core_symbol()), std::string("producer vote pay") }
          );
       }
    }

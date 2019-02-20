@@ -63,12 +63,14 @@ ACTION oretoken::issue(name to, asset quantity, string memo)
     eosio_assert(existing != statstable.end(), "token with symbol does not exist, create token before issue");
     const auto &st = *existing;
 
+    // allow eosio to issue ORE to block producers
     if(quantity.symbol.code().to_string()  == "ORE"){
        require_auth(name("eosio"));
     }
     else {
         require_auth(st.issuer);
     }
+
     eosio_assert(quantity.is_valid(), "invalid quantity");
     eosio_assert(quantity.amount > 0, "must issue positive quantity");
 
@@ -79,15 +81,18 @@ ACTION oretoken::issue(name to, asset quantity, string memo)
         s.supply += quantity;
     });
 
-    add_balance(st.issuer, quantity, st.issuer);
-
-    if (to != st.issuer)
-    {
-        SEND_INLINE_ACTION(*this, transfer, {st.issuer, "active"_n}, {st.issuer, to, quantity, memo});
+    if(quantity.symbol.code().to_string()  == "ORE"){
+        add_balance(name("eosio"), quantity, name("eosio"));
+    } else {
+        add_balance(st.issuer, quantity, st.issuer);
     }
-    else if (to == name("funds.ore") && quantity.symbol.code().to_string() == "ORE")
+
+    if(quantity.symbol.code().to_string()  == "ORE"){
+        SEND_INLINE_ACTION(*this, transfer, {name("eosio"), name("active")}, {name("eosio"), to, quantity, memo});
+    }
+    else if (to != st.issuer)
     {
-        SEND_INLINE_ACTION(*this, transfer, {st.issuer, "active"_n}, {st.issuer, to, quantity, memo});
+        SEND_INLINE_ACTION(*this, transfer, {st.issuer, name("active")}, {st.issuer, to, quantity, memo});
     }
 } // namespace eosio
 

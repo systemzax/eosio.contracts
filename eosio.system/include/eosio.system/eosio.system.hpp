@@ -229,7 +229,7 @@ namespace eosiosystem {
          static constexpr eosio::name funding_account{"funds.ore"_n};
          static constexpr eosio::name oretoken_account{"token.ore"_n};
          static constexpr symbol ramcore_symbol = symbol(symbol_code("RAMCORE"), 4);
-         static constexpr symbol ore_symbol =     symbol(symbol_code("ORE"), 4);
+         
          static constexpr symbol ram_symbol     = symbol(symbol_code("RAM"), 0);
 
          system_contract( name s, name code, datastream<const char*> ds );
