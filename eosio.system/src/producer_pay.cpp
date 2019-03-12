@@ -12,8 +12,8 @@ namespace eosiosystem {
    const int64_t  min_pervote_daily_pay = 100'0000;
    const int64_t  min_activated_stake   = 150'000'000'0000;
    const double   continuous_rate       = 0.04879;          // 5% annual rate
-   const double   perblock_rate         = 0.0050;           // 0.25%
-   const double   standby_rate          = 0.0150;           // 0.75%
+   const int64_t  inflation_pay_factor  = 5;                // 20% of the inflation
+   const int64_t  votepay_factor        = 4;                // 25% of the producer pay
    const uint32_t blocks_per_year       = 52*7*24*2*3600;   // half seconds per year
    const uint32_t seconds_per_year      = 52*7*24*3600;
    const uint32_t blocks_per_day        = 2 * 24 * 3600;
@@ -78,7 +78,10 @@ namespace eosiosystem {
       }
    }
 
+   
+
    using namespace eosio;
+
    void system_contract::claimrewards( const name owner ) {
       require_auth( owner );
 
@@ -97,9 +100,9 @@ namespace eosiosystem {
 
       if( usecs_since_last_fill > 0 && _gstate.last_pervote_bucket_fill > time_point() ) {
          auto new_tokens = static_cast<int64_t>( (continuous_rate * double(token_supply.amount) * double(usecs_since_last_fill)) / double(useconds_per_year) );
-         auto to_producers     = new_tokens / 5;
+         auto to_producers     = 2*new_tokens / inflation_pay_factor;
          auto to_savings       = new_tokens - to_producers;
-         auto to_per_block_pay = to_producers / 4;
+         auto to_per_block_pay = to_producers / votepay_factor;
          auto to_per_vote_pay  = to_producers - to_per_block_pay;
 
          INLINE_ACTION_SENDER(eosio::token, issue)(
@@ -208,24 +211,29 @@ namespace eosiosystem {
          p.unpaid_blocks   = 0;
       });
 
+      
       if( producer_per_block_pay > 0 ) {
+         print(producer_per_block_pay);
          INLINE_ACTION_SENDER(eosio::token, transfer)(
             token_account, { {bpay_account, active_permission}, {owner, active_permission} },
             { bpay_account, funding_account, asset(producer_per_block_pay, core_symbol()), std::string("producer block pay") }
          );
+         print("\nORE\n");
          INLINE_ACTION_SENDER(eosio::token, transfer)(
             token_account, { {bpay_account, active_permission}, {owner, active_permission} },
             { bpay_account, owner, asset(producer_per_block_pay, symbol(symbol_code("ORE"), 4)), std::string("ore producer block pay") }
          );
       }
       if( producer_per_vote_pay > 0 ) {
-         INLINE_ACTION_SENDER(eosio::token, transfer)(
-            token_account, { {vpay_account, active_permission}, {owner, active_permission} },
-            { vpay_account, owner, asset(producer_per_vote_pay, symbol(symbol_code("ORE"), 4)), std::string("producer vote pay") }
-         );
+         print(producer_per_vote_pay);
          INLINE_ACTION_SENDER(eosio::token, transfer)(
             token_account, { {vpay_account, active_permission}, {owner, active_permission} },
             { vpay_account, funding_account, asset(producer_per_vote_pay, core_symbol()), std::string("producer vote pay") }
+         );
+         print("\nORE\n");
+         INLINE_ACTION_SENDER(eosio::token, transfer)(
+            token_account, { {vpay_account, active_permission}, {owner, active_permission} },
+            { vpay_account, owner, asset(producer_per_vote_pay, symbol(symbol_code("ORE"), 4)), std::string("producer vote pay") }
          );
       }
    }
