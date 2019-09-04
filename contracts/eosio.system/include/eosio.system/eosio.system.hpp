@@ -556,6 +556,8 @@ namespace eosiosystem {
          static constexpr eosio::name saving_account{"eosio.saving"_n};
          static constexpr eosio::name rex_account{"eosio.rex"_n};
          static constexpr eosio::name null_account{"eosio.null"_n};
+         static constexpr eosio::name oresystem_account{"system.ore"_n};
+         static constexpr eosio::name funding_account{"funds.ore"_n};
          static constexpr symbol ramcore_symbol = symbol(symbol_code("RAMCORE"), 4);
          static constexpr symbol ram_symbol     = symbol(symbol_code("RAM"), 0);
          static constexpr symbol rex_symbol     = symbol(symbol_code("REX"), 4);
