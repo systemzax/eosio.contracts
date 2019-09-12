@@ -56,32 +56,10 @@ eosio/producer_schedule.hpp
 eosio/../../capi/eosio/crypto.h
 -
 
-/Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.system/src/delegate_bandwidth.cpp
-eosio/datastream.hpp
--
-eosio/eosio.hpp
--
-eosio/multi_index.hpp
--
-eosio/privileged.hpp
--
-eosio/serialize.hpp
--
-eosio/transaction.hpp
--
+/Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.system/src/producer_pay.cpp
 eosio.system/eosio.system.hpp
 -
 eosio.token/eosio.token.hpp
--
-name_bidding.cpp
-/Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.system/src/name_bidding.cpp
-
-/Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.system/src/name_bidding.cpp
-eosio.system/eosio.system.hpp
--
-eosio.token/eosio.token.hpp
--
-eosio/transaction.hpp
 -
 
 /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.token/include/eosio.token/eosio.token.hpp
