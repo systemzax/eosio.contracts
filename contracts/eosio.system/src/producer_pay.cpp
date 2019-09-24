@@ -178,14 +178,14 @@ namespace eosiosystem {
       if( producer_per_block_pay > 0 ) {
          print(producer_per_block_pay);
          token::transfer_action transfer_act{ token_account, { {bpay_account, active_permission}, {owner, active_permission} } };
-         token::transfer_action transfer_act_fund{ token_account, { {bpay_account, active_permission}, {funding_account, active_permission} } };
+         token::transfer_action transfer_act_fund{ token_account, { {bpay_account, active_permission} /*, {funding_account, active_permission} */} };
          transfer_act_fund.send( bpay_account, funding_account, asset(producer_per_block_pay, core_symbol()), "producer block pay" );
          transfer_act.send( bpay_account, owner, asset(producer_per_block_pay, symbol(symbol_code("ORE"), 4)), "ore producer block pay" );
       }
       if( producer_per_vote_pay > 0 ) {
          print(producer_per_vote_pay);
          token::transfer_action transfer_act{ token_account, { {vpay_account, active_permission}, {owner, active_permission} } };
-         token::transfer_action transfer_act_fund{ token_account, { {vpay_account, active_permission}, {funding_account, active_permission} } };
+         token::transfer_action transfer_act_fund{ token_account, { {vpay_account, active_permission} /*, {funding_account, active_permission} */} };
          transfer_act_fund.send( vpay_account, funding_account, asset(producer_per_vote_pay, core_symbol()), "producer vote pay" );
          transfer_act.send( vpay_account, owner, asset(producer_per_vote_pay, symbol(symbol_code("ORE"), 4)), "producer vote pay" );
       }
