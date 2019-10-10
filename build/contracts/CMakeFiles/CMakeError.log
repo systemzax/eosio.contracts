@@ -39,20 +39,20 @@ The output was:
 Detecting C compiler ABI info failed to compile with the following output:
 Change Dir: /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_ee9b5/fast && /Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_ee9b5.dir/build.make CMakeFiles/cmTC_ee9b5.dir/build
-Building C object CMakeFiles/cmTC_ee9b5.dir/CMakeCCompilerABI.c.obj
-//usr/local/bin/eosio-cc   -O3     -v -o CMakeFiles/cmTC_ee9b5.dir/CMakeCCompilerABI.c.obj   -c /usr/local/Cellar/cmake/3.15.1/share/cmake/Modules/CMakeCCompilerABI.c
+Run Build Command(s):/usr/bin/make cmTC_d3bd1/fast && /Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_d3bd1.dir/build.make CMakeFiles/cmTC_d3bd1.dir/build
+Building C object CMakeFiles/cmTC_d3bd1.dir/CMakeCCompilerABI.c.obj
+//usr/local/bin/eosio-cc   -O3     -v -o CMakeFiles/cmTC_d3bd1.dir/CMakeCCompilerABI.c.obj   -c /usr/local/Cellar/cmake/3.15.1/share/cmake/Modules/CMakeCCompilerABI.c
 clang version 7.0.0 (https://github.com/eosio/clang.git 6b886302a11a8419b76e469794ff9d0c531a4b4b) (https://github.com/eosio/llvm 3c026f8b7813ad693749d3551353a554c5ca33e7)
 Target: x86_64-apple-darwin18.7.0
 Thread model: posix
 InstalledDir: /usr/local/Cellar/eosio.cdt/1.6.2/opt/eosio.cdt/bin
-Linking C executable cmTC_ee9b5.wasm
-/usr/local/Cellar/cmake/3.15.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ee9b5.dir/link.txt --verbose=1
-//usr/local/bin/eosio-ld  -v CMakeFiles/cmTC_ee9b5.dir/CMakeCCompilerABI.c.obj -o cmTC_ee9b5.wasm 
+Linking C executable cmTC_d3bd1.wasm
+/usr/local/Cellar/cmake/3.15.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d3bd1.dir/link.txt --verbose=1
+//usr/local/bin/eosio-ld  -v CMakeFiles/cmTC_d3bd1.dir/CMakeCCompilerABI.c.obj -o cmTC_d3bd1.wasm 
 eosio-ld: Unknown command line argument '-v'.  Try: '//usr/local/bin/eosio-ld -help'
 eosio-ld: Did you mean '-L'?
-make[4]: *** [cmTC_ee9b5.wasm] Error 1
-make[3]: *** [cmTC_ee9b5/fast] Error 2
+make[4]: *** [cmTC_d3bd1.wasm] Error 1
+make[3]: *** [cmTC_d3bd1/fast] Error 2
 
 
 
@@ -60,20 +60,20 @@ make[3]: *** [cmTC_ee9b5/fast] Error 2
 Detecting CXX compiler ABI info failed to compile with the following output:
 Change Dir: /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_51d48/fast && /Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_51d48.dir/build.make CMakeFiles/cmTC_51d48.dir/build
-Building CXX object CMakeFiles/cmTC_51d48.dir/CMakeCXXCompilerABI.cpp.obj
-//usr/local/bin/eosio-cpp    -O3     -v -o CMakeFiles/cmTC_51d48.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/local/Cellar/cmake/3.15.1/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+Run Build Command(s):/usr/bin/make cmTC_ddf5c/fast && /Library/Developer/CommandLineTools/usr/bin/make -f CMakeFiles/cmTC_ddf5c.dir/build.make CMakeFiles/cmTC_ddf5c.dir/build
+Building CXX object CMakeFiles/cmTC_ddf5c.dir/CMakeCXXCompilerABI.cpp.obj
+//usr/local/bin/eosio-cpp    -O3     -v -o CMakeFiles/cmTC_ddf5c.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/local/Cellar/cmake/3.15.1/share/cmake/Modules/CMakeCXXCompilerABI.cpp
 clang version 7.0.0 (https://github.com/eosio/clang.git 6b886302a11a8419b76e469794ff9d0c531a4b4b) (https://github.com/eosio/llvm 3c026f8b7813ad693749d3551353a554c5ca33e7)
 Target: x86_64-apple-darwin18.7.0
 Thread model: posix
 InstalledDir: /usr/local/Cellar/eosio.cdt/1.6.2/opt/eosio.cdt/bin
-Linking CXX executable cmTC_51d48.wasm
-/usr/local/Cellar/cmake/3.15.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_51d48.dir/link.txt --verbose=1
-//usr/local/bin/eosio-ld  -v CMakeFiles/cmTC_51d48.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_51d48.wasm 
+Linking CXX executable cmTC_ddf5c.wasm
+/usr/local/Cellar/cmake/3.15.1/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ddf5c.dir/link.txt --verbose=1
+//usr/local/bin/eosio-ld  -v CMakeFiles/cmTC_ddf5c.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_ddf5c.wasm 
 eosio-ld: Unknown command line argument '-v'.  Try: '//usr/local/bin/eosio-ld -help'
 eosio-ld: Did you mean '-L'?
-make[4]: *** [cmTC_51d48.wasm] Error 1
-make[3]: *** [cmTC_51d48/fast] Error 2
+make[4]: *** [cmTC_ddf5c.wasm] Error 1
+make[3]: *** [cmTC_ddf5c/fast] Error 2
 
 
 
