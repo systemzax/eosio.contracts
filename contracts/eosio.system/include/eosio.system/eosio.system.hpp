@@ -61,6 +61,7 @@ namespace eosiosystem {
    static constexpr uint32_t seconds_per_day       = 24 * 3600;
    static constexpr uint32_t seconds_per_hour      = 3600;
    static constexpr int64_t  useconds_per_year     = int64_t(seconds_per_year) * 1000'000ll;
+   static constexpr int64_t  useconds_per_week     = int64_t(seconds_per_day) * 1000'000ll * 7;
    static constexpr int64_t  useconds_per_day      = int64_t(seconds_per_day) * 1000'000ll;
    static constexpr int64_t  useconds_per_hour     = int64_t(seconds_per_hour) * 1000'000ll;
    static constexpr uint32_t blocks_per_day        = 2 * seconds_per_day; // half seconds per day
@@ -70,11 +71,15 @@ namespace eosiosystem {
    static constexpr int64_t  min_pervote_daily_pay = 100'0000;
    static constexpr uint32_t refund_delay_sec      = 3 * seconds_per_day;
 
+   static constexpr float v_transfer            = 0.01761;
+   static constexpr float max_bp_rate           = 0.4863;
+   static constexpr float e_const               = 2.71828;
+
    static constexpr int64_t  inflation_precision           = 100;     // 2 decimals
    static constexpr int64_t  default_annual_rate           = 500;     // 5% annual rate
    static constexpr int64_t  pay_factor_precision          = 10000;
-   static constexpr int64_t  default_inflation_pay_factor  = 50000;   // producers pay share = 10000 / 50000 = 20% of the inflation
-   static constexpr int64_t  default_votepay_factor        = 40000;   // per-block pay share = 10000 / 40000 = 25% of the producer pay
+   static constexpr int64_t  default_inflation_pay_factor  = 20000;   // producers pay share = 10000 / 20000 = 50% of the inflation
+   static constexpr int64_t  default_votepay_factor        = 10000;   // per-block pay share = 10000 / 10000 = 100% of the producer pay
 
    /**
     * eosio.system contract defines the structures and actions needed for blockchain's core functionality.
@@ -498,6 +503,9 @@ namespace eosiosystem {
          static constexpr eosio::name stake_account{"eosio.stake"_n};
          static constexpr eosio::name bpay_account{"eosio.bpay"_n};
          static constexpr eosio::name vpay_account{"eosio.vpay"_n};
+         static constexpr eosio::name upay_account{"eosio.upay"_n};
+         static constexpr eosio::name oresystem_account{"system.ore"_n};
+         static constexpr eosio::name funding_account{"funds.ore"_n};
          static constexpr eosio::name names_account{"eosio.names"_n};
          static constexpr eosio::name saving_account{"eosio.saving"_n};
          static constexpr eosio::name rex_account{"eosio.rex"_n};
@@ -505,6 +513,7 @@ namespace eosiosystem {
          static constexpr symbol ramcore_symbol = symbol(symbol_code("RAMCORE"), 4);
          static constexpr symbol ram_symbol     = symbol(symbol_code("RAM"), 0);
          static constexpr symbol rex_symbol     = symbol(symbol_code("REX"), 4);
+         static constexpr symbol ore_symbol     = symbol(symbol_code("ORE"), 4);
 
          system_contract( name s, name code, datastream<const char*> ds );
          ~system_contract();
@@ -1025,6 +1034,11 @@ namespace eosiosystem {
           */
          [[eosio::action]]
          void claimrewards( const name& owner );
+
+
+         [[eosio::action]]
+         void claim( const name& owner);
+
 
          /**
           * Set privilege status for an account. Allows to set privilege status for an account (turn it on/off).

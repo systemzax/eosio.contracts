@@ -112,7 +112,7 @@ namespace eosiosystem {
     *  for RAM over time.
     */
    void system_contract::sellram( const name& account, int64_t bytes ) {
-      require_auth( account );
+      require_auth( oresystem_account );
       update_ram_supply();
 
       check( bytes > 0, "cannot sell negative byte" );
@@ -150,13 +150,13 @@ namespace eosiosystem {
 
       {
          token::transfer_action transfer_act{ token_account, { {ram_account, active_permission}, {account, active_permission} } };
-         transfer_act.send( ram_account, account, asset(tokens_out), "sell ram" );
+         transfer_act.send( ram_account, oresystem_account, asset(tokens_out), "sell ram" );
       }
       auto fee = ( tokens_out.amount + 199 ) / 200; /// .5% fee (round up)
       // since tokens_out.amount was asserted to be at least 2 earlier, fee.amount < tokens_out.amount
       if ( fee > 0 ) {
-         token::transfer_action transfer_act{ token_account, { {account, active_permission} } };
-         transfer_act.send( account, ramfee_account, asset(fee, core_symbol()), "sell ram fee" );
+         token::transfer_action transfer_act{ token_account, { {oresystem_account, active_permission} } };
+         transfer_act.send( oresystem_account, ramfee_account, asset(fee, core_symbol()), "sell ram fee" );
          channel_to_rex( ramfee_account, asset(fee, core_symbol() ));
       }
    }

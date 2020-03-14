@@ -2,6 +2,8 @@
 
 #include <eosio/asset.hpp>
 #include <eosio/eosio.hpp>
+#include <eosio/time.hpp>
+#include <eosio/system.hpp>
 
 #include <string>
 
@@ -12,7 +14,6 @@ namespace eosiosystem {
 namespace eosio {
 
    using std::string;
-
    /**
     * eosio.token contract defines the structures and actions that allow users to create, issue, and manage
     * tokens on eosio based blockchains.
@@ -20,6 +21,27 @@ namespace eosio {
    class [[eosio::contract("eosio.token")]] token : public contract {
       public:
          using contract::contract;
+
+//*** Added GBT
+
+          static constexpr name ore_lock{"lock.ore"_n};
+
+           struct [[eosio::table]] reserve {
+              asset          staked;
+              time_point     last_claimed;
+              
+              uint64_t primary_key()const { return staked.symbol.code().raw(); }
+           };
+
+           struct [[eosio::table]] staking_stats {
+              asset    ore_staked;
+
+              uint64_t primary_key()const { return ore_staked.symbol.code().raw(); }
+           };
+
+          typedef eosio::multi_index< "reserves"_n, reserve > reserves;
+          typedef eosio::multi_index< "stakestats"_n, staking_stats > stakestats;
+//***
 
          /**
           * Allows `issuer` account to create a token in supply of `maximum_supply`. If validation is successful a new entry in statstable for token symbol scope gets created.
@@ -69,6 +91,23 @@ namespace eosio {
                         const name&    to,
                         const asset&   quantity,
                         const string&  memo );
+
+//*** Added GBT
+         [[eosio::action]]
+         void stake( const name&    account,
+                      const asset&   quantity,
+                      const string&  memo );
+
+         [[eosio::action]]
+         void unstake( const name&    account,
+                      const asset&   quantity,
+                      const string&  memo );
+
+         [[eosio::action]]
+         void setstaked( const asset& value);
+//***
+
+
          /**
           * Allows `ram_payer` to create an account `owner` with zero balance for
           * token `symbol` at the expense of `ram_payer`.
@@ -110,15 +149,36 @@ namespace eosio {
             return ac.balance;
          }
 
+//*** Added GBT
+
+         static asset get_total_staked( const name& token_contract_account, const symbol_code& sym_code )
+         {  
+
+            stakestats stable( token_contract_account, sym_code.raw() );
+            const auto& st = stable.get( sym_code.raw() );
+
+            return st.ore_staked;
+         }
+
+         static asset get_staked( const name& token_contract_account, const name& owner, const symbol_code& sym_code )
+         {
+            reserves reservestable( token_contract_account, owner.value );
+            const auto& r = reservestable.get( sym_code.raw() );
+            return r.staked;
+         }
+//***
          using create_action = eosio::action_wrapper<"create"_n, &token::create>;
          using issue_action = eosio::action_wrapper<"issue"_n, &token::issue>;
          using retire_action = eosio::action_wrapper<"retire"_n, &token::retire>;
          using transfer_action = eosio::action_wrapper<"transfer"_n, &token::transfer>;
          using open_action = eosio::action_wrapper<"open"_n, &token::open>;
+         using stake_action = eosio::action_wrapper<"stake"_n, &token::stake>;
+         using unstake_action = eosio::action_wrapper<"unstake"_n, &token::unstake>;
+         using setstaked_action = eosio::action_wrapper<"setstaked"_n, &token::setstaked>;
          using close_action = eosio::action_wrapper<"close"_n, &token::close>;
       private:
          struct [[eosio::table]] account {
-            asset    balance;
+            asset       balance;
 
             uint64_t primary_key()const { return balance.symbol.code().raw(); }
          };
@@ -133,9 +193,17 @@ namespace eosio {
 
          typedef eosio::multi_index< "accounts"_n, account > accounts;
          typedef eosio::multi_index< "stat"_n, currency_stats > stats;
-
+         
          void sub_balance( const name& owner, const asset& value );
          void add_balance( const name& owner, const asset& value, const name& ram_payer );
+
+//*** Added GBT
+
+         void sub_stake( const name& account, const asset& value );
+         void add_stake( const name& account, const asset& value );
+
+//***
+
    };
 
 }
