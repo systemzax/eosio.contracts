@@ -266,6 +266,20 @@ void token::open( const name& owner, const symbol& symbol, const name& ram_payer
 }
 
 //*** Changed GBT
+
+void token::updateclaim(const name& owner){
+
+    require_auth("eosio"_n);
+
+    token::reserves rtable( get_self(), owner.value );
+    auto itr = rtable.find( ore_symbol.code().raw()  );
+
+    rtable.modify( itr, same_payer, [&]( auto& a ) {
+      a.last_claimed = current_time_point();
+    });
+
+}
+
 void token::close( const name& owner, const symbol& symbol )
 {
    require_auth( owner );

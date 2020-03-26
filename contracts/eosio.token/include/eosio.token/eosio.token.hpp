@@ -24,6 +24,7 @@ namespace eosio {
 
 //*** Added GBT
 
+          static constexpr symbol ore_symbol     = symbol(symbol_code("ORE"), 4);
           static constexpr name ore_lock{"lock.ore"_n};
 
            struct [[eosio::table]] reserve {
@@ -77,6 +78,7 @@ namespace eosio {
          [[eosio::action]]
          void retire( const asset& quantity, const string& memo );
 
+
          /**
           * Allows `from` account to transfer to `to` account the `quantity` tokens.
           * One account is debited and the other is credited with quantity tokens.
@@ -93,6 +95,7 @@ namespace eosio {
                         const string&  memo );
 
 //*** Added GBT
+
          [[eosio::action]]
          void stake( const name&    account,
                       const asset&   quantity,
@@ -105,6 +108,10 @@ namespace eosio {
 
          [[eosio::action]]
          void setstaked( const asset& value);
+
+         [[eosio::action]]
+         void updateclaim(const name& owner);
+         
 //***
 
 
@@ -175,6 +182,7 @@ namespace eosio {
          using stake_action = eosio::action_wrapper<"stake"_n, &token::stake>;
          using unstake_action = eosio::action_wrapper<"unstake"_n, &token::unstake>;
          using setstaked_action = eosio::action_wrapper<"setstaked"_n, &token::setstaked>;
+         using updateclaim_action = eosio::action_wrapper<"updateclaim"_n, &token::updateclaim>;
          using close_action = eosio::action_wrapper<"close"_n, &token::close>;
       private:
          struct [[eosio::table]] account {

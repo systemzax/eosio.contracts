@@ -62,11 +62,12 @@ namespace eosiosystem {
    static constexpr uint32_t seconds_per_hour      = 3600;
    static constexpr int64_t  useconds_per_year     = int64_t(seconds_per_year) * 1000'000ll;
    static constexpr int64_t  useconds_per_week     = int64_t(seconds_per_day) * 1000'000ll * 7;
+   static constexpr int64_t  useconds_per_30d     = int64_t(seconds_per_day) * 1000'000ll * 30;
    static constexpr int64_t  useconds_per_day      = int64_t(seconds_per_day) * 1000'000ll;
    static constexpr int64_t  useconds_per_hour     = int64_t(seconds_per_hour) * 1000'000ll;
    static constexpr uint32_t blocks_per_day        = 2 * seconds_per_day; // half seconds per day
 
-   static constexpr int64_t  min_activated_stake   = 150'000'000'0000;
+   static constexpr int64_t  min_activated_stake   = 1'000'000'0000;
    static constexpr int64_t  ram_gift_bytes        = 1400;
    static constexpr int64_t  min_pervote_daily_pay = 100'0000;
    static constexpr uint32_t refund_delay_sec      = 3 * seconds_per_day;
@@ -1175,6 +1176,8 @@ namespace eosiosystem {
          static eosio_global_state4 get_default_inflation_parameters();
          symbol core_symbol()const;
          void update_ram_supply();
+
+         void allocate_inflation();
 
          // defined in rex.cpp
          void runrex( uint16_t max );
