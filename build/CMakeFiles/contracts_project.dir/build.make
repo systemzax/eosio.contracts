@@ -34,10 +34,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/local/Cellar/cmake/3.15.1/bin/cmake
+CMAKE_COMMAND = /usr/local/Cellar/cmake/3.15.5/bin/cmake
 
 # The command to remove a file.
-RM = /usr/local/Cellar/cmake/3.15.1/bin/cmake -E remove -f
+RM = /usr/local/Cellar/cmake/3.15.5/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -66,47 +66,47 @@ CMakeFiles/contracts_project-complete: contracts_project-prefix/src/contracts_pr
 CMakeFiles/contracts_project-complete: contracts_project-prefix/src/contracts_project-stamp/contracts_project-install
 CMakeFiles/contracts_project-complete: contracts_project-prefix/src/contracts_project-stamp/contracts_project-test
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/basarcancelebci/Work/API-market/eosio.contracts/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Completed 'contracts_project'"
-	/usr/local/Cellar/cmake/3.15.1/bin/cmake -E make_directory /Users/basarcancelebci/Work/API-market/eosio.contracts/build/CMakeFiles
-	/usr/local/Cellar/cmake/3.15.1/bin/cmake -E touch /Users/basarcancelebci/Work/API-market/eosio.contracts/build/CMakeFiles/contracts_project-complete
-	/usr/local/Cellar/cmake/3.15.1/bin/cmake -E touch /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp/contracts_project-done
+	/usr/local/Cellar/cmake/3.15.5/bin/cmake -E make_directory /Users/basarcancelebci/Work/API-market/eosio.contracts/build/CMakeFiles
+	/usr/local/Cellar/cmake/3.15.5/bin/cmake -E touch /Users/basarcancelebci/Work/API-market/eosio.contracts/build/CMakeFiles/contracts_project-complete
+	/usr/local/Cellar/cmake/3.15.5/bin/cmake -E touch /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp/contracts_project-done
 
 contracts_project-prefix/src/contracts_project-stamp/contracts_project-install: contracts_project-prefix/src/contracts_project-stamp/contracts_project-build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/basarcancelebci/Work/API-market/eosio.contracts/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "No install step for 'contracts_project'"
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts && /usr/local/Cellar/cmake/3.15.1/bin/cmake -E echo_append
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts && /usr/local/Cellar/cmake/3.15.1/bin/cmake -E touch /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp/contracts_project-install
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts && /usr/local/Cellar/cmake/3.15.5/bin/cmake -E echo_append
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts && /usr/local/Cellar/cmake/3.15.5/bin/cmake -E touch /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp/contracts_project-install
 
 contracts_project-prefix/src/contracts_project-stamp/contracts_project-mkdir:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/basarcancelebci/Work/API-market/eosio.contracts/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Creating directories for 'contracts_project'"
-	/usr/local/Cellar/cmake/3.15.1/bin/cmake -E make_directory /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts
-	/usr/local/Cellar/cmake/3.15.1/bin/cmake -E make_directory /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts
-	/usr/local/Cellar/cmake/3.15.1/bin/cmake -E make_directory /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix
-	/usr/local/Cellar/cmake/3.15.1/bin/cmake -E make_directory /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/tmp
-	/usr/local/Cellar/cmake/3.15.1/bin/cmake -E make_directory /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp
-	/usr/local/Cellar/cmake/3.15.1/bin/cmake -E make_directory /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src
-	/usr/local/Cellar/cmake/3.15.1/bin/cmake -E make_directory /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp
-	/usr/local/Cellar/cmake/3.15.1/bin/cmake -E touch /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp/contracts_project-mkdir
+	/usr/local/Cellar/cmake/3.15.5/bin/cmake -E make_directory /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts
+	/usr/local/Cellar/cmake/3.15.5/bin/cmake -E make_directory /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts
+	/usr/local/Cellar/cmake/3.15.5/bin/cmake -E make_directory /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix
+	/usr/local/Cellar/cmake/3.15.5/bin/cmake -E make_directory /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/tmp
+	/usr/local/Cellar/cmake/3.15.5/bin/cmake -E make_directory /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp
+	/usr/local/Cellar/cmake/3.15.5/bin/cmake -E make_directory /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src
+	/usr/local/Cellar/cmake/3.15.5/bin/cmake -E make_directory /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp
+	/usr/local/Cellar/cmake/3.15.5/bin/cmake -E touch /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp/contracts_project-mkdir
 
 contracts_project-prefix/src/contracts_project-stamp/contracts_project-download: contracts_project-prefix/src/contracts_project-stamp/contracts_project-mkdir
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/basarcancelebci/Work/API-market/eosio.contracts/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "No download step for 'contracts_project'"
-	/usr/local/Cellar/cmake/3.15.1/bin/cmake -E echo_append
-	/usr/local/Cellar/cmake/3.15.1/bin/cmake -E touch /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp/contracts_project-download
+	/usr/local/Cellar/cmake/3.15.5/bin/cmake -E echo_append
+	/usr/local/Cellar/cmake/3.15.5/bin/cmake -E touch /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp/contracts_project-download
 
 contracts_project-prefix/src/contracts_project-stamp/contracts_project-update: contracts_project-prefix/src/contracts_project-stamp/contracts_project-download
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/basarcancelebci/Work/API-market/eosio.contracts/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "No update step for 'contracts_project'"
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts && /usr/local/Cellar/cmake/3.15.1/bin/cmake -E echo_append
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts && /usr/local/Cellar/cmake/3.15.1/bin/cmake -E touch /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp/contracts_project-update
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts && /usr/local/Cellar/cmake/3.15.5/bin/cmake -E echo_append
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts && /usr/local/Cellar/cmake/3.15.5/bin/cmake -E touch /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp/contracts_project-update
 
 contracts_project-prefix/src/contracts_project-stamp/contracts_project-patch: contracts_project-prefix/src/contracts_project-stamp/contracts_project-download
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/basarcancelebci/Work/API-market/eosio.contracts/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "No patch step for 'contracts_project'"
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts && /usr/local/Cellar/cmake/3.15.1/bin/cmake -E echo_append
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts && /usr/local/Cellar/cmake/3.15.1/bin/cmake -E touch /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp/contracts_project-patch
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts && /usr/local/Cellar/cmake/3.15.5/bin/cmake -E echo_append
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts && /usr/local/Cellar/cmake/3.15.5/bin/cmake -E touch /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp/contracts_project-patch
 
 contracts_project-prefix/src/contracts_project-stamp/contracts_project-configure: contracts_project-prefix/tmp/contracts_project-cfgcmd.txt
 contracts_project-prefix/src/contracts_project-stamp/contracts_project-configure: contracts_project-prefix/src/contracts_project-stamp/contracts_project-update
 contracts_project-prefix/src/contracts_project-stamp/contracts_project-configure: contracts_project-prefix/src/contracts_project-stamp/contracts_project-patch
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/basarcancelebci/Work/API-market/eosio.contracts/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Performing configure step for 'contracts_project'"
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts && /usr/local/Cellar/cmake/3.15.1/bin/cmake -DCMAKE_TOOLCHAIN_FILE=//usr/local/opt/eosio.cdt/lib/cmake/eosio.cdt/EosioWasmToolchain.cmake "-GUnix Makefiles" /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts && /usr/local/Cellar/cmake/3.15.1/bin/cmake -E touch /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp/contracts_project-configure
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts && /usr/local/Cellar/cmake/3.15.5/bin/cmake -DCMAKE_TOOLCHAIN_FILE=/usr/local/eosio.cdt/lib/cmake/eosio.cdt/EosioWasmToolchain.cmake "-GUnix Makefiles" /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts && /usr/local/Cellar/cmake/3.15.5/bin/cmake -E touch /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp/contracts_project-configure
 
 contracts_project-prefix/src/contracts_project-stamp/contracts_project-build: contracts_project-prefix/src/contracts_project-stamp/contracts_project-configure
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/basarcancelebci/Work/API-market/eosio.contracts/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Performing build step for 'contracts_project'"
@@ -114,8 +114,8 @@ contracts_project-prefix/src/contracts_project-stamp/contracts_project-build: co
 
 contracts_project-prefix/src/contracts_project-stamp/contracts_project-test: contracts_project-prefix/src/contracts_project-stamp/contracts_project-install
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/Users/basarcancelebci/Work/API-market/eosio.contracts/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "No test step for 'contracts_project'"
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts && /usr/local/Cellar/cmake/3.15.1/bin/cmake -E echo_append
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts && /usr/local/Cellar/cmake/3.15.1/bin/cmake -E touch /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp/contracts_project-test
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts && /usr/local/Cellar/cmake/3.15.5/bin/cmake -E echo_append
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts && /usr/local/Cellar/cmake/3.15.5/bin/cmake -E touch /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts_project-prefix/src/contracts_project-stamp/contracts_project-test
 
 contracts_project: CMakeFiles/contracts_project
 contracts_project: CMakeFiles/contracts_project-complete

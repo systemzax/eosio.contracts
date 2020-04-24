@@ -34,10 +34,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/local/Cellar/cmake/3.15.1/bin/cmake
+CMAKE_COMMAND = /usr/local/Cellar/cmake/3.15.5/bin/cmake
 
 # The command to remove a file.
-RM = /usr/local/Cellar/cmake/3.15.1/bin/cmake -E remove -f
+RM = /usr/local/Cellar/cmake/3.15.5/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -60,15 +60,15 @@ include eosio.token/CMakeFiles/eosio.token.dir/flags.make
 eosio.token/CMakeFiles/eosio.token.dir/src/eosio.token.cpp.obj: eosio.token/CMakeFiles/eosio.token.dir/flags.make
 eosio.token/CMakeFiles/eosio.token.dir/src/eosio.token.cpp.obj: /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.token/src/eosio.token.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object eosio.token/CMakeFiles/eosio.token.dir/src/eosio.token.cpp.obj"
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.token && //usr/local/bin/eosio-cpp  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/eosio.token.dir/src/eosio.token.cpp.obj -c /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.token/src/eosio.token.cpp
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.token && /Users/basarcancelebci/Work/EOSIO/eosio.cdt/build/bin/eosio-cpp  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/eosio.token.dir/src/eosio.token.cpp.obj -c /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.token/src/eosio.token.cpp
 
 eosio.token/CMakeFiles/eosio.token.dir/src/eosio.token.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/eosio.token.dir/src/eosio.token.cpp.i"
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.token && //usr/local/bin/eosio-cpp $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.token/src/eosio.token.cpp > CMakeFiles/eosio.token.dir/src/eosio.token.cpp.i
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.token && /Users/basarcancelebci/Work/EOSIO/eosio.cdt/build/bin/eosio-cpp $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.token/src/eosio.token.cpp > CMakeFiles/eosio.token.dir/src/eosio.token.cpp.i
 
 eosio.token/CMakeFiles/eosio.token.dir/src/eosio.token.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/eosio.token.dir/src/eosio.token.cpp.s"
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.token && //usr/local/bin/eosio-cpp $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.token/src/eosio.token.cpp -o CMakeFiles/eosio.token.dir/src/eosio.token.cpp.s
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.token && /Users/basarcancelebci/Work/EOSIO/eosio.cdt/build/bin/eosio-cpp $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.token/src/eosio.token.cpp -o CMakeFiles/eosio.token.dir/src/eosio.token.cpp.s
 
 # Object files for target eosio.token
 eosio_token_OBJECTS = \

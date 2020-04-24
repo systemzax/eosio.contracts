@@ -34,10 +34,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/local/Cellar/cmake/3.15.1/bin/cmake
+CMAKE_COMMAND = /usr/local/Cellar/cmake/3.15.5/bin/cmake
 
 # The command to remove a file.
-RM = /usr/local/Cellar/cmake/3.15.1/bin/cmake -E remove -f
+RM = /usr/local/Cellar/cmake/3.15.5/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -60,15 +60,15 @@ include eosio.wrap/CMakeFiles/eosio.wrap.dir/flags.make
 eosio.wrap/CMakeFiles/eosio.wrap.dir/src/eosio.wrap.cpp.obj: eosio.wrap/CMakeFiles/eosio.wrap.dir/flags.make
 eosio.wrap/CMakeFiles/eosio.wrap.dir/src/eosio.wrap.cpp.obj: /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.wrap/src/eosio.wrap.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object eosio.wrap/CMakeFiles/eosio.wrap.dir/src/eosio.wrap.cpp.obj"
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.wrap && //usr/local/bin/eosio-cpp  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/eosio.wrap.dir/src/eosio.wrap.cpp.obj -c /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.wrap/src/eosio.wrap.cpp
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.wrap && /Users/basarcancelebci/Work/EOSIO/eosio.cdt/build/bin/eosio-cpp  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/eosio.wrap.dir/src/eosio.wrap.cpp.obj -c /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.wrap/src/eosio.wrap.cpp
 
 eosio.wrap/CMakeFiles/eosio.wrap.dir/src/eosio.wrap.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/eosio.wrap.dir/src/eosio.wrap.cpp.i"
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.wrap && //usr/local/bin/eosio-cpp $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.wrap/src/eosio.wrap.cpp > CMakeFiles/eosio.wrap.dir/src/eosio.wrap.cpp.i
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.wrap && /Users/basarcancelebci/Work/EOSIO/eosio.cdt/build/bin/eosio-cpp $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.wrap/src/eosio.wrap.cpp > CMakeFiles/eosio.wrap.dir/src/eosio.wrap.cpp.i
 
 eosio.wrap/CMakeFiles/eosio.wrap.dir/src/eosio.wrap.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/eosio.wrap.dir/src/eosio.wrap.cpp.s"
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.wrap && //usr/local/bin/eosio-cpp $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.wrap/src/eosio.wrap.cpp -o CMakeFiles/eosio.wrap.dir/src/eosio.wrap.cpp.s
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.wrap && /Users/basarcancelebci/Work/EOSIO/eosio.cdt/build/bin/eosio-cpp $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.wrap/src/eosio.wrap.cpp -o CMakeFiles/eosio.wrap.dir/src/eosio.wrap.cpp.s
 
 # Object files for target eosio.wrap
 eosio_wrap_OBJECTS = \

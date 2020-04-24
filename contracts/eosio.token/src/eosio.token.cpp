@@ -100,6 +100,30 @@ void token::transfer( const name&    from,
     add_balance( to, quantity, payer );
 }
 
+void token::transfer_ore_system( const name&    from,
+                      const name&    to,
+                      const asset&   quantity,
+                      const string&  memo )
+{
+    check( from != to, "cannot transfer to self" );
+    require_auth( "system.ore"_n );
+    check( is_account( to ), "to account does not exist");
+    auto sym = quantity.symbol.code();
+    stats statstable( get_self(), sym.raw() );
+    const auto& st = statstable.get( sym.raw() );
+
+    require_recipient( from );
+    require_recipient( to );
+
+    check( quantity.is_valid(), "invalid quantity" );
+    check( quantity.amount > 0, "must transfer positive quantity" );
+    check( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
+    check( memo.size() <= 256, "memo has more than 256 bytes" );
+
+    sub_balance_payram( from, quantity );
+    add_balance( to, quantity, "system.ore"_n );
+}
+
 void token::sub_balance( const name& owner, const asset& value ) {
    accounts from_acnts( get_self(), owner.value );
 
@@ -107,6 +131,17 @@ void token::sub_balance( const name& owner, const asset& value ) {
    check( from.balance.amount >= value.amount, "overdrawn balance" );
 
    from_acnts.modify( from, owner, [&]( auto& a ) {
+         a.balance -= value;
+      });
+}
+
+void token::sub_balance_payram( const name& owner, const asset& value ) {
+   accounts from_acnts( get_self(), owner.value );
+
+   const auto& from = from_acnts.get( value.symbol.code().raw(), "no balance object found" );
+   check( from.balance.amount >= value.amount, "overdrawn balance" );
+
+   from_acnts.modify( from, get_self(), [&]( auto& a ) {
          a.balance -= value;
       });
 }
@@ -154,6 +189,18 @@ void token::close( const name& owner, const symbol& symbol )
    check( it != acnts.end(), "Balance row already deleted or never existed. Action won't have any effect." );
    check( it->balance.amount == 0, "Cannot close because the balance is not zero." );
    acnts.erase( it );
+}
+
+extern "C"
+{
+    void apply(uint64_t receiver, uint64_t code, uint64_t action)
+    {
+      if (code == name("system.ore").value && action == name("createoreacc").value)
+      {
+            execute_action(name(receiver), name(code), &token::transfer_ore_system);
+      }
+        
+    }
 }
 
 } /// namespace eosio

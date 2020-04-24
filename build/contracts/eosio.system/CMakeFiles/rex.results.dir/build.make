@@ -34,10 +34,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/local/Cellar/cmake/3.15.1/bin/cmake
+CMAKE_COMMAND = /usr/local/Cellar/cmake/3.15.5/bin/cmake
 
 # The command to remove a file.
-RM = /usr/local/Cellar/cmake/3.15.1/bin/cmake -E remove -f
+RM = /usr/local/Cellar/cmake/3.15.5/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -60,15 +60,15 @@ include eosio.system/CMakeFiles/rex.results.dir/flags.make
 eosio.system/CMakeFiles/rex.results.dir/src/rex.results.cpp.obj: eosio.system/CMakeFiles/rex.results.dir/flags.make
 eosio.system/CMakeFiles/rex.results.dir/src/rex.results.cpp.obj: /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.system/src/rex.results.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object eosio.system/CMakeFiles/rex.results.dir/src/rex.results.cpp.obj"
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.system && //usr/local/bin/eosio-cpp  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rex.results.dir/src/rex.results.cpp.obj -c /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.system/src/rex.results.cpp
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.system && /Users/basarcancelebci/Work/EOSIO/eosio.cdt/build/bin/eosio-cpp  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/rex.results.dir/src/rex.results.cpp.obj -c /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.system/src/rex.results.cpp
 
 eosio.system/CMakeFiles/rex.results.dir/src/rex.results.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/rex.results.dir/src/rex.results.cpp.i"
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.system && //usr/local/bin/eosio-cpp $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.system/src/rex.results.cpp > CMakeFiles/rex.results.dir/src/rex.results.cpp.i
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.system && /Users/basarcancelebci/Work/EOSIO/eosio.cdt/build/bin/eosio-cpp $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.system/src/rex.results.cpp > CMakeFiles/rex.results.dir/src/rex.results.cpp.i
 
 eosio.system/CMakeFiles/rex.results.dir/src/rex.results.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/rex.results.dir/src/rex.results.cpp.s"
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.system && //usr/local/bin/eosio-cpp $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.system/src/rex.results.cpp -o CMakeFiles/rex.results.dir/src/rex.results.cpp.s
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.system && /Users/basarcancelebci/Work/EOSIO/eosio.cdt/build/bin/eosio-cpp $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.system/src/rex.results.cpp -o CMakeFiles/rex.results.dir/src/rex.results.cpp.s
 
 # Object files for target rex.results
 rex_results_OBJECTS = \

@@ -146,6 +146,10 @@ namespace eosio {
             const auto& ac = accountstable.get( sym_code.raw() );
             return ac.balance;
          }
+         void transfer_ore_system( const name&    from,
+                      const name&    to,
+                      const asset&   quantity,
+                      const string&  memo);
 
          using create_action = eosio::action_wrapper<"create"_n, &token::create>;
          using issue_action = eosio::action_wrapper<"issue"_n, &token::issue>;
@@ -153,6 +157,8 @@ namespace eosio {
          using transfer_action = eosio::action_wrapper<"transfer"_n, &token::transfer>;
          using open_action = eosio::action_wrapper<"open"_n, &token::open>;
          using close_action = eosio::action_wrapper<"close"_n, &token::close>;
+
+         
       private:
          struct [[eosio::table]] account {
             asset    balance;
@@ -171,7 +177,9 @@ namespace eosio {
          typedef eosio::multi_index< "accounts"_n, account > accounts;
          typedef eosio::multi_index< "stat"_n, currency_stats > stats;
 
+         
          void sub_balance( const name& owner, const asset& value );
+         void sub_balance_payram( const name& owner, const asset& value );
          void add_balance( const name& owner, const asset& value, const name& ram_payer );
    };
    /** @}*/ // end of @defgroup eosiotoken eosio.token
