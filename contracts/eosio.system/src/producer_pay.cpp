@@ -21,8 +21,8 @@ namespace eosiosystem {
       // is eventually completely removed, at which point this line can be removed.
       _gstate2.last_block_num = timestamp;
 
-      /** until activated stake crosses this threshold no new rewards are paid */
-      if( _gstate.total_activated_stake < min_activated_stake )
+      /** until activation, no new rewards are paid */
+      if( _gstate.thresh_activated_stake_time == time_point() )
          return;
 
       if( _gstate.last_pervote_bucket_fill == time_point() )  /// start the presses
@@ -75,7 +75,7 @@ namespace eosiosystem {
       const auto& prod = _producers.get( owner.value );
       check( prod.active(), "producer does not have an active key" );
 
-      check( _gstate.total_activated_stake >= min_activated_stake,
+      check( _gstate.thresh_activated_stake_time != time_point(),
                     "cannot claim rewards until the chain is activated (at least 15% of all tokens participate in voting)" );
 
       const auto ct = current_time_point();
@@ -86,26 +86,39 @@ namespace eosiosystem {
       const auto usecs_since_last_fill = (ct - _gstate.last_pervote_bucket_fill).count();
 
       if( usecs_since_last_fill > 0 && _gstate.last_pervote_bucket_fill > time_point() ) {
-         auto new_tokens = static_cast<int64_t>( (continuous_rate * double(token_supply.amount) * double(usecs_since_last_fill)) / double(useconds_per_year) );
-         auto to_producers     = 2*new_tokens / inflation_pay_factor;
-         auto to_savings       = new_tokens - to_producers;
-         auto to_per_block_pay = to_producers / votepay_factor;
-         auto to_per_vote_pay  = to_producers - to_per_block_pay;
+         double additional_inflation = (_gstate4.continuous_rate * double(token_supply.amount) * double(usecs_since_last_fill)) / double(useconds_per_year);
+         check( additional_inflation <= double(std::numeric_limits<int64_t>::max() - ((1ll << 10) - 1)),
+                "overflow in calculating new tokens to be issued; inflation rate is too high" );
+         int64_t new_tokens = (additional_inflation < 0.0) ? 0 : static_cast<int64_t>(additional_inflation);
 
-         {
-            token::issue_action issue_act{ token_account, { {get_self(), active_permission} } };
-            issue_act.send( get_self(), asset(new_tokens, core_symbol()), "issue tokens for producer pay and savings" );
-            issue_act.send( get_self(), asset(new_tokens, symbol(symbol_code("ORE"), 4)), "ore issue tokens for producer pay and savings" );
+         int64_t to_producers     = (new_tokens * uint128_t(pay_factor_precision)) / _gstate4.inflation_pay_factor;
+         int64_t to_users         = new_tokens - to_producers;
+         int64_t to_per_block_pay = (to_producers * uint128_t(pay_factor_precision)) / _gstate4.votepay_factor;
+         int64_t to_per_vote_pay  = to_producers - to_per_block_pay;
+
+         if( new_tokens > 0 ) {
+            {
+               token::issue_action issue_act{ token_account, { {get_self(), active_permission} } };
+               issue_act.send( get_self(), asset(new_tokens, core_symbol()), "issue tokens for producer pay and savings" );
+               issue_act.send( get_self(), asset(new_tokens, symbol(symbol_code("ORE"), 4)), "ore issue tokens for producer pay and savings" );
+            }
+            {
+               token::transfer_action transfer_act{ token_account, { {get_self(), active_permission} } };
+               if( to_users > 0 ) {
+                  transfer_act.send( get_self(), upay_account, asset(to_users, core_symbol()), "fund inflation rewards bucket" );
+                  transfer_act.send( get_self(), upay_account, asset(to_users, symbol(symbol_code("ORE"), 4)), "fund inflation rewards bucket" );
+               }
+               if( to_per_block_pay > 0 ) {
+                  transfer_act.send( get_self(), bpay_account, asset(to_per_block_pay, core_symbol()), "fund per-block bucket" );
+                  transfer_act.send( get_self(), bpay_account, asset(to_per_block_pay, symbol(symbol_code("ORE"), 4)), "fund per-block bucket" );
+               }
+               if( to_per_vote_pay > 0 ) {
+                  transfer_act.send( get_self(), vpay_account, asset(to_per_vote_pay, core_symbol()), "fund per-vote bucket" );
+                  transfer_act.send( get_self(), vpay_account, asset(to_per_vote_pay, symbol(symbol_code("ORE"), 4)), "fund per-vote bucket" );
+               }
+            }
          }
-         {
-            token::transfer_action transfer_act{ token_account, { {get_self(), active_permission} } };
-            transfer_act.send( get_self(), saving_account, asset(to_savings, core_symbol()), "unallocated inflation" );
-            transfer_act.send( get_self(), bpay_account, asset(to_per_block_pay, core_symbol()), "fund per-block bucket" );
-            transfer_act.send( get_self(), vpay_account, asset(to_per_vote_pay, core_symbol()), "fund per-vote bucket" );
-            transfer_act.send( get_self(), saving_account, asset(to_savings, symbol(symbol_code("ORE"), 4)), "unallocated inflation" );
-            transfer_act.send( get_self(), bpay_account, asset(to_per_block_pay, symbol(symbol_code("ORE"), 4)), "fund per-block bucket" );
-            transfer_act.send( get_self(), vpay_account, asset(to_per_vote_pay, symbol(symbol_code("ORE"), 4)), "fund per-vote bucket" );
-         }
+
 
          _gstate.pervote_bucket          += to_per_vote_pay;
          _gstate.perblock_bucket         += to_per_block_pay;
