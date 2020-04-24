@@ -1,5 +1,6 @@
 #include <eosio.token/eosio.token.hpp>
 
+
 namespace eosio {
 
 void token::create( const name&   issuer,
@@ -100,6 +101,48 @@ void token::transfer( const name&    from,
     add_balance( to, quantity, payer );
 }
 
+//*** Added GBT
+void token::stake( const name&    account,
+                      const asset&   quantity,
+                      const string&  memo )
+{
+    
+    require_auth( ore_lock );
+    check( is_account( account ), "account does not exist");
+    auto sym = quantity.symbol.code();
+    stats statstable( get_self(), sym.raw() );
+    const auto& st = statstable.get( sym.raw() );
+
+    check( quantity.is_valid(), "invalid quantity" );
+    check( quantity.amount > 0, "must stake positive quantity" );
+    check( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
+    check( memo.size() <= 256, "memo has more than 256 bytes" );
+
+    sub_balance( account, quantity );
+    add_stake( account, quantity);
+}
+
+void token::unstake( const name&    account,
+                      const asset&   quantity,
+                      const string&  memo )
+{
+    require_auth( ore_lock );
+    check( is_account( account ), "account does not exist");
+    auto sym = quantity.symbol.code();
+    stats statstable( get_self(), sym.raw() );
+    const auto& st = statstable.get( sym.raw() );
+
+
+    check( quantity.is_valid(), "invalid quantity" );
+    check( quantity.amount > 0, "must unstake positive quantity" );
+    check( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
+    check( memo.size() <= 256, "memo has more than 256 bytes" );
+
+    sub_stake( account, quantity );
+    add_balance( account, quantity, account);
+}
+//*** 
+
 void token::sub_balance( const name& owner, const asset& value ) {
    accounts from_acnts( get_self(), owner.value );
 
@@ -126,6 +169,82 @@ void token::add_balance( const name& owner, const asset& value, const name& ram_
    }
 }
 
+//*** Added GBT
+void token::sub_stake( const name& owner, const asset& value ) {
+   reserves rtable( get_self(), owner.value );
+
+   const auto& from = rtable.get( value.symbol.code().raw(), "no balance object found" );
+   check( from.staked.amount >= value.amount, "overdrawn balance" );
+
+   rtable.modify( from, owner, [&]( auto& a ) {
+       a.staked -= value;
+    });
+
+   stakestats stable( get_self(), value.symbol.code().raw() );
+
+   auto st = stable.find( value.symbol.code().raw() );
+
+   check(st->ore_staked.amount - value.amount>=0, "cannot unstake more than what is available");
+
+    stable.modify( st, same_payer, [&]( auto& a ) {
+      a.ore_staked -= value;
+    });
+  
+}
+
+void token::add_stake( const name& owner, const asset& value)
+{
+   reserves rtable( get_self(), owner.value );
+   auto to = rtable.find( value.symbol.code().raw() );
+   if( to == rtable.end() ) {
+      rtable.emplace( owner, [&]( auto& a ){
+        a.staked = value;
+      });
+   } else {
+      rtable.modify( to, owner, [&]( auto& a ) {
+        a.staked += value;
+      });
+   }
+
+   stakestats stable( get_self(), value.symbol.code().raw() );
+
+   auto st = stable.find( value.symbol.code().raw() );
+
+   if( st == stable.end() ) {
+      stable.emplace( _self, [&]( auto& a ){
+        a.ore_staked = value;
+      });
+   } else {
+      stable.modify( st, same_payer, [&]( auto& a ) {
+        a.ore_staked += value;
+      });
+   }
+
+}
+
+//one-time configuration step, should only be called once by eosio account
+void token::setstaked(const asset& value)
+{
+
+   require_auth(_self);
+
+   stakestats stable( get_self(), value.symbol.code().raw() );
+
+   auto st = stable.find( value.symbol.code().raw() );
+
+   if( st == stable.end() ) {
+      stable.emplace( _self, [&]( auto& a ){
+        a.ore_staked = value;
+      });
+   } else {
+      stable.modify( st, same_payer, [&]( auto& a ) {
+        a.ore_staked = value;
+      });
+   }
+
+}
+//***
+
 void token::open( const name& owner, const symbol& symbol, const name& ram_payer )
 {
    require_auth( ram_payer );
@@ -146,14 +265,35 @@ void token::open( const name& owner, const symbol& symbol, const name& ram_payer
    }
 }
 
+//*** Changed GBT
+
+void token::updateclaim(const name& owner){
+
+    require_auth("eosio"_n);
+
+    token::reserves rtable( get_self(), owner.value );
+    auto itr = rtable.find( ore_symbol.code().raw()  );
+
+    rtable.modify( itr, same_payer, [&]( auto& a ) {
+      a.last_claimed = current_time_point();
+    });
+
+}
+
 void token::close( const name& owner, const symbol& symbol )
 {
    require_auth( owner );
    accounts acnts( get_self(), owner.value );
-   auto it = acnts.find( symbol.code().raw() );
-   check( it != acnts.end(), "Balance row already deleted or never existed. Action won't have any effect." );
-   check( it->balance.amount == 0, "Cannot close because the balance is not zero." );
-   acnts.erase( it );
-}
+   reserves rtable( get_self(), owner.value );
+   auto ait = acnts.find( symbol.code().raw() );
+   auto rit = rtable.find( symbol.code().raw() );
+   check( ait != acnts.end(), "Balance row already deleted or never existed. Action won't have any effect." );
+   check( rit != rtable.end(), "Reserve row already deleted or never existed. Action won't have any effect." );
+   check( ait->balance.amount == 0, "Cannot close because the balance is not zero." );
+   check( rit->staked.amount == 0, "Cannot close because the staked balance is not zero." );
 
+   acnts.erase( ait );
+   rtable.erase( rit );
+}
+//***
 } /// namespace eosio

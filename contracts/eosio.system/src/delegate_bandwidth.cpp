@@ -112,7 +112,7 @@ namespace eosiosystem {
     *  for RAM over time.
     */
    void system_contract::sellram( const name& account, int64_t bytes ) {
-      require_auth(oresystem_account);
+      require_auth( oresystem_account );
       update_ram_supply();
 
       check( bytes > 0, "cannot sell negative byte" );

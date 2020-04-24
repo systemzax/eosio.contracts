@@ -1,6 +1,8 @@
 #include <eosio.system/eosio.system.hpp>
 #include <eosio.token/eosio.token.hpp>
 
+#include <cmath>
+
 namespace eosiosystem {
 
    using eosio::current_time_point;
@@ -65,22 +67,9 @@ namespace eosiosystem {
       }
    }
 
-   
-
-   using namespace eosio;
-
-   void system_contract::claimrewards( const name& owner ) {
-      require_auth( owner );
-
-      const auto& prod = _producers.get( owner.value );
-      check( prod.active(), "producer does not have an active key" );
-
-      check( _gstate.thresh_activated_stake_time != time_point(),
-                    "cannot claim rewards until the chain is activated (at least 15% of all tokens participate in voting)" );
+   void system_contract::allocate_inflation(){
 
       const auto ct = current_time_point();
-
-      check( ct - prod.last_claim_time > microseconds(useconds_per_day), "already claimed rewards within past day" );
 
       const asset token_supply   = token::get_supply(token_account, core_symbol().code() );
       const auto usecs_since_last_fill = (ct - _gstate.last_pervote_bucket_fill).count();
@@ -124,6 +113,75 @@ namespace eosiosystem {
          _gstate.perblock_bucket         += to_per_block_pay;
          _gstate.last_pervote_bucket_fill = ct;
       }
+
+   }
+
+   void system_contract::claim( const name& owner ){ 
+
+     //no auth check needed
+
+     check( _gstate.thresh_activated_stake_time != time_point(),
+                    "cannot claim rewards until the chain is activated (at least 15% of all tokens participate in voting)" );
+
+     token::reserves rtable( token_account, owner.value );
+     auto itr = rtable.find( ore_symbol.code().raw()  );
+     check( itr != rtable.end(), "no reserve found for account");
+
+     token::stakestats stable(token_account, ore_symbol.code().raw()  );
+
+     auto st = stable.find( ore_symbol.code().raw()  );
+
+     check(st != stable.end(), "no ORE token stats found");
+
+     const auto ct = current_time_point();
+     //check( ct - itr->last_claimed > microseconds(useconds_per_30d), "already claimed rewards within past 30 days" );
+     check( ct - itr->last_claimed > microseconds(6000000), "already claimed rewards within past 30 days" );
+
+     allocate_inflation();
+
+     asset staked = eosio::token::get_staked(token_account, owner, ore_symbol.code());
+     asset total_staked = token::get_total_staked(token_account, ore_symbol.code());
+     asset pool_rewards = eosio::token::get_balance(token_account, upay_account, ore_symbol.code());
+
+     check(staked.amount>0, "cannot claim rewards without tokens staked");
+     
+     eosio::print("staked: ", staked, "\n");
+     eosio::print("total_staked: ", total_staked, "\n");
+     eosio::print("pool_rewards: ", pool_rewards, "\n");
+
+     float reward_share = (float)staked.amount / (float)total_staked.amount;
+     float reward_amount = reward_share * (float)pool_rewards.amount;
+
+     eosio::print("reward_share: ", reward_share, "\n");
+     eosio::print("reward_amount: ", reward_amount, "\n");
+
+     check( reward_amount > 0, "no rewards to claim" );
+
+     asset rewards = asset{(int64_t)reward_amount, ore_symbol};
+
+     token::updateclaim_action updateclaim_act{ token_account, {  {get_self(), active_permission}} };
+     updateclaim_act.send( owner);
+
+     token::transfer_action transfer_act{ token_account, {  {upay_account, active_permission}, {owner, active_permission}} };
+     transfer_act.send( upay_account, owner, rewards, "staking rewards" );
+
+   }
+
+   void system_contract::claimrewards( const name& owner ) {
+      require_auth( owner );
+
+      const auto& prod = _producers.get( owner.value );
+      check( prod.active(), "producer does not have an active key" );
+
+      check( _gstate.thresh_activated_stake_time != time_point(),
+                    "cannot claim rewards until the chain is activated (at least 15% of all tokens participate in voting)" );
+
+      const auto ct = current_time_point();
+
+      //check( ct - prod.last_claim_time > microseconds(useconds_per_day), "already claimed rewards within past day" );
+      check( ct - prod.last_claim_time > microseconds(6000000), "already claimed rewards within past day" );
+
+      allocate_inflation();
 
       auto prod2 = _producers2.find( owner.value );
 
@@ -193,7 +251,7 @@ namespace eosiosystem {
          token::transfer_action transfer_act{ token_account, { {bpay_account, active_permission}, {owner, active_permission} } };
          token::transfer_action transfer_act_fund{ token_account, { {bpay_account, active_permission} , {funding_account, active_permission} } };
          transfer_act_fund.send( bpay_account, funding_account, asset(producer_per_block_pay, core_symbol()), "producer block pay" );
-         transfer_act.send( bpay_account, owner, asset(producer_per_block_pay, symbol(symbol_code("ORE"), 4)), "ore producer block pay" );
+         transfer_act.send( bpay_account, owner, asset(producer_per_block_pay, symbol(symbol_code("ORE"), 4)), "producer block pay" );
       }
       if( producer_per_vote_pay > 0 ) {
          print(producer_per_vote_pay);
@@ -202,6 +260,65 @@ namespace eosiosystem {
          transfer_act_fund.send( vpay_account, funding_account, asset(producer_per_vote_pay, core_symbol()), "producer vote pay" );
          transfer_act.send( vpay_account, owner, asset(producer_per_vote_pay, symbol(symbol_code("ORE"), 4)), "producer vote pay" );
       }
+
+      asset staked = token::get_total_staked("eosio.token"_n, symbol_code("ORE"));
+      asset supply = token::get_supply("eosio.token"_n, symbol_code("ORE"));
+
+      float current_usage_ratio = (float)staked.amount / (float)supply.amount;
+
+      eosio::print("current staked:", staked, "\n");
+      eosio::print("current supply:", supply, "\n");
+      eosio::print("current usage ratio:", current_usage_ratio, "\n");
+
+      if (current_usage_ratio==0) return;
+      //-1*u*Math.LN10*u*Math.exp(1);
+      float y = -1*current_usage_ratio*log(current_usage_ratio)*e_const;
+      eosio::print("y: ", y, "\n");
+
+      float v_tu = y * v_transfer;
+      eosio::print("v_tu: ", v_tu, "\n");
+
+      float i_u = (1-current_usage_ratio) / (1-current_usage_ratio-v_tu) -1;
+      eosio::print("i_u: ", i_u, "\n");
+
+      float g_uy = i_u / current_usage_ratio;
+      eosio::print("g_uy: ", g_uy, "\n");
+
+      float b_pru = y*max_bp_rate;
+      eosio::print("b_pru: ", b_pru, "\n");
+
+      float u_pu = std::pow(1+g_uy, 1-b_pru)-1;
+      eosio::print("u_pu: ", u_pu, "\n");
+
+      float u_pay = std::max(i_u*current_usage_ratio, u_pu*current_usage_ratio);
+      eosio::print("u_pay: ", u_pay, "\n");
+
+      float bp_pay = i_u - u_pay;
+      eosio::print("bp_pay: ", bp_pay, "\n");
+
+      float ar = (((u_pay*inflation_precision) + (bp_pay*inflation_precision)) *inflation_precision);
+      eosio::print("ar: ", ar, "\n");
+
+      float pps = (bp_pay / (u_pay + bp_pay));
+      eosio::print("pps: ", pps, "\n");
+  
+      int64_t i_ar = (int64_t)(ar+0.5); //global annualized inflation rate
+      eosio::print("i_ar: ", i_ar, "\n");
+
+      int64_t ipf = (int64_t)((1/pps*pay_factor_precision)+0.5);  //producer pay factor
+      eosio::print("ipf: ", ipf, "\n");
+
+      int64_t vpf = _gstate4.votepay_factor; // remains constant since there's no voting
+      eosio::print("vpf: ", vpf, "\n");
+
+      eosio::print("new inflation numbers:\n");
+      eosio::print("i_ar: ", i_ar, "\n");
+      eosio::print("ipf: ", ipf, "\n");
+      eosio::print("vpf: ", vpf, "\n");
+
+      system_contract::setinflation_action setinflation_act{ _self, { {_self, active_permission} } };
+      setinflation_act.send(i_ar, ipf, vpf);
+
    }
 
 } //namespace eosiosystem
