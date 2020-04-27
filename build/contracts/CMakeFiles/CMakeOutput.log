@@ -26,3 +26,31 @@ Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" p
 
 The CXX compiler identification is Clang, found in "/Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/CMakeFiles/3.15.1/CompilerIdCXX/CMakeCXXCompilerId.wasm"
 
+The target system is: Generic -  - wasm
+The host system is: Darwin - 19.4.0 - x86_64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /Users/basarcancelebci/Work/EOSIO/eosio.cdt/build/bin/eosio-cc 
+Build flags: ;-O3;
+Id flags: -c 
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.wasm"
+
+The C compiler identification is Clang, found in "/Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/CMakeFiles/3.15.5/CompilerIdC/CMakeCCompilerId.wasm"
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: /Users/basarcancelebci/Work/EOSIO/eosio.cdt/build/bin/eosio-cpp 
+Build flags: ;-O3;
+Id flags: -c 
+
+The output was:
+0
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.wasm"
+
+The CXX compiler identification is Clang, found in "/Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/CMakeFiles/3.15.5/CompilerIdCXX/CMakeCXXCompilerId.wasm"
+

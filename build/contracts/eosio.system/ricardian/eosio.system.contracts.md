@@ -75,7 +75,7 @@ icon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/resource.png#3830f
 ---
 spec_version: "0.2.0"
 title: Buy REX Tokens
-summary: '{{nowrap from}} buys REX tokens in exchange for {{nowrap amount}} and his vote stake increases by {{nowrap amount}}'
+summary: '{{nowrap from}} buys REX tokens in exchange for {{nowrap amount}} and their vote stake increases by {{nowrap amount}}'
 icon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/rex.png#d229837fa62a464b9c71e06060aa86179adf0b3f4e3b8c4f9702f4f4b0c340a8
 ---
 
@@ -545,6 +545,21 @@ icon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/admin.png#9bf1cec6
 ---
 
 {{$action.account}} adjusts REX loan rate by setting REX pool virtual balance to {{balance}}. No token transfer or issue is executed in this action.
+
+<h1 class="contract">setinflation</h1>
+
+---
+spec_version: "0.2.0"
+title: Set Inflation Parameters
+summary: 'Set inflation parameters'
+icon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/admin.png#9bf1cec664863bd6aaac0f814b235f8799fb02c850e9aa5da34e8a004bd6518e
+---
+
+{{$action.account}} sets the inflation parameters as follows:
+
+* Annual inflation rate (in units of a hundredth of a percent): {{annual_rate}}
+* Fraction of inflation used to reward block producers: 10000/{{inflation_pay_factor}}
+* Fraction of block producer rewards to be distributed proportional to blocks produced: 10000/{{votepay_factor}}
 
 <h1 class="contract">undelegatebw</h1>
 

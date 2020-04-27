@@ -17,12 +17,12 @@ eosio/transaction.hpp
 -
 
 /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.msig/src/eosio.msig.cpp
-eosio.msig/eosio.msig.hpp
--
 eosio/action.hpp
+-
+eosio/crypto.hpp
 -
 eosio/permission.hpp
 -
-eosio/crypto.hpp
+eosio.msig/eosio.msig.hpp
 -
 

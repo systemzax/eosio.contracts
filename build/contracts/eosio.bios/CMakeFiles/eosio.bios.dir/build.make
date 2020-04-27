@@ -34,10 +34,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/local/Cellar/cmake/3.15.1/bin/cmake
+CMAKE_COMMAND = /usr/local/Cellar/cmake/3.15.5/bin/cmake
 
 # The command to remove a file.
-RM = /usr/local/Cellar/cmake/3.15.1/bin/cmake -E remove -f
+RM = /usr/local/Cellar/cmake/3.15.5/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -60,15 +60,15 @@ include eosio.bios/CMakeFiles/eosio.bios.dir/flags.make
 eosio.bios/CMakeFiles/eosio.bios.dir/src/eosio.bios.cpp.obj: eosio.bios/CMakeFiles/eosio.bios.dir/flags.make
 eosio.bios/CMakeFiles/eosio.bios.dir/src/eosio.bios.cpp.obj: /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.bios/src/eosio.bios.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object eosio.bios/CMakeFiles/eosio.bios.dir/src/eosio.bios.cpp.obj"
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.bios && //usr/local/bin/eosio-cpp  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/eosio.bios.dir/src/eosio.bios.cpp.obj -c /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.bios/src/eosio.bios.cpp
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.bios && /Users/basarcancelebci/Work/EOSIO/eosio.cdt/build/bin/eosio-cpp  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/eosio.bios.dir/src/eosio.bios.cpp.obj -c /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.bios/src/eosio.bios.cpp
 
 eosio.bios/CMakeFiles/eosio.bios.dir/src/eosio.bios.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/eosio.bios.dir/src/eosio.bios.cpp.i"
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.bios && //usr/local/bin/eosio-cpp $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.bios/src/eosio.bios.cpp > CMakeFiles/eosio.bios.dir/src/eosio.bios.cpp.i
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.bios && /Users/basarcancelebci/Work/EOSIO/eosio.cdt/build/bin/eosio-cpp $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.bios/src/eosio.bios.cpp > CMakeFiles/eosio.bios.dir/src/eosio.bios.cpp.i
 
 eosio.bios/CMakeFiles/eosio.bios.dir/src/eosio.bios.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/eosio.bios.dir/src/eosio.bios.cpp.s"
-	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.bios && //usr/local/bin/eosio-cpp $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.bios/src/eosio.bios.cpp -o CMakeFiles/eosio.bios.dir/src/eosio.bios.cpp.s
+	cd /Users/basarcancelebci/Work/API-market/eosio.contracts/build/contracts/eosio.bios && /Users/basarcancelebci/Work/EOSIO/eosio.cdt/build/bin/eosio-cpp $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.bios/src/eosio.bios.cpp -o CMakeFiles/eosio.bios.dir/src/eosio.bios.cpp.s
 
 # Object files for target eosio.bios
 eosio_bios_OBJECTS = \

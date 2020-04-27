@@ -272,6 +272,16 @@
             ]
         },
         {
+            "name": "claim",
+            "base": "",
+            "fields": [
+                {
+                    "name": "owner",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "claimrewards",
             "base": "",
             "fields": [
@@ -536,6 +546,24 @@
             ]
         },
         {
+            "name": "eosio_global_state4",
+            "base": "",
+            "fields": [
+                {
+                    "name": "continuous_rate",
+                    "type": "float64"
+                },
+                {
+                    "name": "inflation_pay_factor",
+                    "type": "int64"
+                },
+                {
+                    "name": "votepay_factor",
+                    "type": "int64"
+                }
+            ]
+        },
+        {
             "name": "exchange_state",
             "base": "",
             "fields": [
@@ -740,11 +768,11 @@
             "base": "",
             "fields": [
                 {
-                    "name": "first",
+                    "name": "key",
                     "type": "time_point_sec"
                 },
                 {
-                    "name": "second",
+                    "name": "value",
                     "type": "int64"
                 }
             ]
@@ -1132,6 +1160,54 @@
             ]
         },
         {
+            "name": "rex_return_buckets",
+            "base": "",
+            "fields": [
+                {
+                    "name": "version",
+                    "type": "uint8"
+                },
+                {
+                    "name": "return_buckets",
+                    "type": "pair_time_point_sec_int64[]"
+                }
+            ]
+        },
+        {
+            "name": "rex_return_pool",
+            "base": "",
+            "fields": [
+                {
+                    "name": "version",
+                    "type": "uint8"
+                },
+                {
+                    "name": "last_dist_time",
+                    "type": "time_point_sec"
+                },
+                {
+                    "name": "pending_bucket_time",
+                    "type": "time_point_sec"
+                },
+                {
+                    "name": "oldest_bucket_time",
+                    "type": "time_point_sec"
+                },
+                {
+                    "name": "pending_bucket_proceeds",
+                    "type": "int64"
+                },
+                {
+                    "name": "current_rate_of_increase",
+                    "type": "int64"
+                },
+                {
+                    "name": "proceeds",
+                    "type": "int64"
+                }
+            ]
+        },
+        {
             "name": "rexexec",
             "base": "",
             "fields": [
@@ -1280,6 +1356,24 @@
                 {
                     "name": "code",
                     "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "setinflation",
+            "base": "",
+            "fields": [
+                {
+                    "name": "annual_rate",
+                    "type": "int64"
+                },
+                {
+                    "name": "inflation_pay_factor",
+                    "type": "int64"
+                },
+                {
+                    "name": "votepay_factor",
+                    "type": "int64"
                 }
             ]
         },
@@ -1595,12 +1689,17 @@
         {
             "name": "buyrex",
             "type": "buyrex",
-            "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Buy REX Tokens\nsummary: '{{nowrap from}} buys REX tokens in exchange for {{nowrap amount}} and his vote stake increases by {{nowrap amount}}'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/rex.png#d229837fa62a464b9c71e06060aa86179adf0b3f4e3b8c4f9702f4f4b0c340a8\n---\n\n{{amount}} is taken out of {{from}}’s REX fund and used to purchase REX tokens at the current market exchange rate. In order for the action to succeed, {{from}} must have voted for a proxy or at least 21 block producers. {{amount}} is added to {{from}}’s vote stake.\n\nA sell order of the purchased amount can only be initiated after waiting for the maturity period of 4 to 5 days to pass. Even then, depending on the market conditions, the initiated sell order may not be executed immediately."
+            "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Buy REX Tokens\nsummary: '{{nowrap from}} buys REX tokens in exchange for {{nowrap amount}} and their vote stake increases by {{nowrap amount}}'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/rex.png#d229837fa62a464b9c71e06060aa86179adf0b3f4e3b8c4f9702f4f4b0c340a8\n---\n\n{{amount}} is taken out of {{from}}’s REX fund and used to purchase REX tokens at the current market exchange rate. In order for the action to succeed, {{from}} must have voted for a proxy or at least 21 block producers. {{amount}} is added to {{from}}’s vote stake.\n\nA sell order of the purchased amount can only be initiated after waiting for the maturity period of 4 to 5 days to pass. Even then, depending on the market conditions, the initiated sell order may not be executed immediately."
         },
         {
             "name": "canceldelay",
             "type": "canceldelay",
             "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Cancel Delayed Transaction\nsummary: '{{nowrap canceling_auth.actor}} cancels a delayed transaction'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/account.png#3d55a2fc3a5c20b456f5657faf666bc25ffd06f4836c5e8256f741149b0b294f\n---\n\n{{canceling_auth.actor}} cancels the delayed transaction with id {{trx_id}}."
+        },
+        {
+            "name": "claim",
+            "type": "claim",
+            "ricardian_contract": ""
         },
         {
             "name": "claimrewards",
@@ -1768,6 +1867,11 @@
             "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Deploy Contract Code\nsummary: 'Deploy contract code on account {{nowrap account}}'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/account.png#3d55a2fc3a5c20b456f5657faf666bc25ffd06f4836c5e8256f741149b0b294f\n---\n\nDeploy compiled contract code to the account {{account}}."
         },
         {
+            "name": "setinflation",
+            "type": "setinflation",
+            "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Set Inflation Parameters\nsummary: 'Set inflation parameters'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/admin.png#9bf1cec664863bd6aaac0f814b235f8799fb02c850e9aa5da34e8a004bd6518e\n---\n\n{{$action.account}} sets the inflation parameters as follows:\n\n* Annual inflation rate (in units of a hundredth of a percent): {{annual_rate}}\n* Fraction of inflation used to reward block producers: 10000/{{inflation_pay_factor}}\n* Fraction of block producer rewards to be distributed proportional to blocks produced: 10000/{{votepay_factor}}"
+        },
+        {
             "name": "setparams",
             "type": "setparams",
             "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Set System Parameters\nsummary: 'Set System Parameters'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/admin.png#9bf1cec664863bd6aaac0f814b235f8799fb02c850e9aa5da34e8a004bd6518e\n---\n\n{{$action.account}} sets system parameters to:\n{{to_json params}}"
@@ -1889,6 +1993,13 @@
             "key_types": []
         },
         {
+            "name": "global4",
+            "type": "eosio_global_state4",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
             "name": "namebids",
             "type": "name_bid",
             "index_type": "i64",
@@ -1931,6 +2042,13 @@
             "key_types": []
         },
         {
+            "name": "retbuckets",
+            "type": "rex_return_buckets",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
             "name": "rexbal",
             "type": "rex_balance",
             "index_type": "i64",
@@ -1954,6 +2072,13 @@
         {
             "name": "rexqueue",
             "type": "rex_order",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "rexretpool",
+            "type": "rex_return_pool",
             "index_type": "i64",
             "key_names": [],
             "key_types": []

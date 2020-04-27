@@ -93,12 +93,6 @@ eosio/crypto.hpp
 -
 eosio/dispatcher.hpp
 -
-
-/Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.system/src/exchange_state.cpp
-eosio.system/exchange_state.hpp
--
-eosio/check.hpp
--
 cmath
 -
 
@@ -110,16 +104,12 @@ eosio.token/eosio.token.hpp
 eosio/transaction.hpp
 -
 
-/Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.system/src/native.cpp
-eosio.system/native.hpp
--
-eosio/check.hpp
--
-
 /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.system/src/producer_pay.cpp
 eosio.system/eosio.system.hpp
 -
 eosio.token/eosio.token.hpp
+-
+cmath
 -
 
 /Users/basarcancelebci/Work/API-market/eosio.contracts/contracts/eosio.system/src/rex.cpp
@@ -158,6 +148,10 @@ cmath
 eosio/asset.hpp
 -
 eosio/eosio.hpp
+-
+eosio/time.hpp
+-
+eosio/system.hpp
 -
 string
 -
